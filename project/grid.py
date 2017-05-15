@@ -17,7 +17,6 @@ def phi_at_x( phi, grid, x ):
     Returns:
         phi[index] (float): The electrostatic potential at the x coordinate with position [index].
     """
-
     index = index_of_grid_at_x( grid, x )
     return phi[ index ]
 
@@ -122,9 +121,8 @@ class Grid_Point:
         else:
             return [None]
 
-def avg( energies, method = 'mean' ):
+def avg( energies, method='mean' ):
     """ 
-   
     Returns the average segregation energy for a site based on a specified method 
 
     Args: 
@@ -137,7 +135,6 @@ def avg( energies, method = 'mean' ):
         average site energies (np.array): Average segregation energies on a 1D grid.
   
     """
-
     if method == 'mean':
         return [ np.mean( row ) for row in energies.T ] 
     elif method == 'min':
