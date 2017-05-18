@@ -18,9 +18,9 @@ class Defect_at_Site:
         self.fixed = fixed 
    
 
-    def electrochemical_potential( self, phi ):
+    def standard_electrochemical_potential( self, phi ):
         """
-        Electrochemical potential for the defect at this site.
+        Concentration independent Electrochemical potential for the defect at this site.
 
         Args:
             phi (float): electrostatic potential at this site
@@ -45,7 +45,7 @@ class Defect_at_Site:
             (float): Boltzmann statistics
    
         """
-        return math.exp( - self.electrochemical_potential( phi ) / ( boltzmann_eV * temp ) )
+        return math.exp( - self.standard_electrochemical_potential( phi ) / ( boltzmann_eV * temp ) )
 
     def boltzmann_two( self, phi, temp ):
         """
