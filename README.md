@@ -23,9 +23,18 @@
 ### API Documentation
 API documentation can be found [here](https://pyscses.readthedocs.io/en/latest/)
 
-Source code is available as a git repository at [https://github.com/bjmorgan/pyscses/tree/master/pyscses](https://github.com/bjmorgan/pyscses/tree/master/pyscses)
+
+## Scientific Context
+Crystalline solids consist of periodic arrangements of atoms that vibrate about fixed lattice sites. In most solids, atoms rarely move between lattice sites, and long ranged atomic diffusion is slow. Solid electrolytes are notable because they contain atoms that can rapidly move between lattice sites, giving high diffusion coefficients. This unusual property makes them useful in solid-state electrochemical devices such as fuel cells and solid-state batteries [@MahatoEtAl_ProgMaterSci2015; @ZhengEtAl_JPowerSources2018]. Many practical solid electrolytes are polycrystalline: they contain multiple crystalline domains, with varied orientations, that meet at grain boundaries. 
+
+All (poly)crystalline materials contain defects&mdash;these are structural imperfections in the crystal that break local crystal symmetries, such as vacancies of interstitials. Thermodynamic arguments predict that defects will spontaneously segregate towards, or away from, interfaces and grain boundaries. In ionic crystals, such as solid electrolytes, these defects carry electric charge, and their segregation produces a build up of charge at grain boundaries. This, in turn, causes a redistribution of charged defects in adjacent crystalline regions, to form locally charged &ldquo;space-charge&rdquo; regions [@Maier_BerBunsenges1984; @Maier_JPhysChemSol1985; @Maier_SolStatIonics2003; @ChiangEtAl_ApplPhysLett1996; @KimAndMaier_JElectrochemSoc2002]. In space-charge regions, defect concentrations may differ significantly from average &ldquo;bulk&rdquo; values in a single crystal [@FleigAndMaier_SolidStateIonics1996]. Ionic conductivities depend on local defect concentrations, and space-charge regions with reduced or enhanced defect numbers can therefore significantly affect the ionic conductivities of solid electrolytes [@JamnikAndMaier_SolidStateIonics1999]. Understanding the defect segregation and space-charge formation in solid electrolytes is therefore key to optimising the properties of these materials for use in electrochemical devices.
+
+One approach to modelling space-charge formation in solid electrolytes is to consider defects as ideal point-charges embedded in a continuum dielectric, and to calculate equilibrium defect distributions by solving mean-field &ldquo;Poisson-Boltzmann&rdquo;-like equations [@Franceschetti_SolStatIonics1981; @GuoAndWaser_ProgMaterSci2006; @NymanEtAl_ApplPhysLett2012; @LindmanEtAl_SolStatIonics2013a; @PolfusEtAl_SolStatIonics2016; @HelgeeEtAl_FuelCells2013]. While numerical solutions to the 1D Poisson-Boltzmann equation are relatively simple to implement, published results are typically obtined using private closed-source codes, making it difficult to reproduce results or to test the effect of different approximations included in specific models. ``pyscses`` provides an open-source Python package for modelling space-charge formation in solid electrolytes, within a 1D Poisson-Boltzmann-like formalism.We are currently using ``pyscses`` in our own research into space-charge formation in solid electrolytes for fuel cells and lithium-ion batteries, and hope that this open-source resource will support reproducible research practices in future studies in this area [@SandveEtAl_PLoSComputBiol2013].
+
+
   
 ## Installation
+Source code is available as a git repository at [https://github.com/bjmorgan/pyscses/tree/master/pyscses](https://github.com/bjmorgan/pyscses/tree/master/pyscses)
 
 The simplest way to install `pyscses` is to use `pip` to install from [PyPI](https://pypi.org/project/pyscses/)
 ```
