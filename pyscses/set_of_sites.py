@@ -8,16 +8,16 @@ from pyscses.site import Site
 from pyscses.constants import boltzmann_eV
 from bisect import bisect_left
 
-class Set_of_Sites:
-    """The Set_of_Sites object groups together all of the Site objects into one object and contains functions for the calculations that provide properties of all of the sites together rather than individually. """
+class SetOfSites:
+    """The SetOfSites object groups together all of the Site objects into one object and contains functions for the calculations that provide properties of all of the sites together rather than individually. """
     def __init__( self, sites ):
         self.sites = sites
     
     def __add__( self, other ):
-        """ Allows the concatenation of multiple Set_of_Sites objects"""
-        if type( other ) is not Set_of_Sites:
+        """ Allows the concatenation of multiple SetOfSites objects"""
+        if type( other ) is not SetOfSites:
             raise TypeError
-        return Set_of_Sites( self.sites + other.sites )
+        return SetOfSites( self.sites + other.sites )
 
     def __getitem__( self, index ):
         """ Returns the site corresponding to a given index """
@@ -123,10 +123,10 @@ class Set_of_Sites:
     def form_continuum_sites( all_sites, x_min, x_max, n_points, b, c, defect_species, limits_for_laplacian, site_labels, defect_labels ):
   
         """
-        Creates a Set_of_Sites object for sites interpolated onto a regular grid, this is equivalent to assuming a continuum approximation.
+        Creates a SetOfSites object for sites interpolated onto a regular grid, this is equivalent to assuming a continuum approximation.
 
         Args:
-            all_sites (object): Orginal Set_of_Sites object from full data.
+            all_sites (object): Orginal SetOfSites object from full data.
             x_min (float): Minimum x coordinate value defining the calculation region.
             x_max (float): Maximum x coordinate value defining the calculation region. 
             n_points (int): Number of points that the data should be interpolated on to.
@@ -138,7 +138,7 @@ class Set_of_Sites:
             defect_labels (list): List of strings for the different defect species.
 
         Returns:
-            :obj:`Set_of_Sites`: Sites interpolated onto a regular grid.
+            :obj:`SetOfSites`: Sites interpolated onto a regular grid.
 
 	"""	    
   
@@ -152,12 +152,12 @@ class Set_of_Sites:
             new_energies = griddata( ( [ site.x for site in all_sites.subset( label ) ] ), average_energies, grid, method = 'nearest' )
             for x, e in zip( grid, new_energies):
                 sites.append( Site( label, x, [ defect_species[ d_label ] ], [e], scaling = np.array( scaling ) ) )
-        return Set_of_Sites( sites ), limits    
+        return SetOfSites( sites ), limits    
 
     @ classmethod
     def set_of_sites_from_input_data( cls, input_data, limits, defect_species, site_charge, core, temperature, offset=0.0 ):
         """
-        Takes the data from the input file and creates a Set_of_Sites object for those sites. 
+        Takes the data from the input file and creates a SetOfSites object for those sites. 
 	The input data file is a .txt file where each line in the file corresponds to a site. The values in each line are formatted and separated into the corresponding properties before creating a Site object for each site.
 
         Args:
@@ -169,7 +169,7 @@ class Set_of_Sites:
 	    temperature (float): Temperature that the calculation is being run at.
 
 	Returns:
-	    :obj:`Set_of_Sites`: `Set_of_Sites` object for the input data.
+	    :obj:`SetOfSites`: `SetOfSites` object for the input data.
 
  	"""
         site_data = load_site_data( input_data, limits[0], limits[1], site_charge, offset )
@@ -183,7 +183,7 @@ class Set_of_Sites:
             for line in site_data:
                 if ( -boltzmann_eV * temperature) <= line[4] <= ( boltzmann_eV * temperature ):
                     line[4] = 0.0
-        return Set_of_Sites( [ site_from_input_file( line, defect_species, site_charge, core, temperature ) for line in site_data ] )
+        return SetOfSites( [ site_from_input_file( line, defect_species, site_charge, core, temperature ) for line in site_data ] )
 
     @ classmethod
     def core_width_analysis( cls, input_data, limits, defect_species, site_charge, core, temperature ):

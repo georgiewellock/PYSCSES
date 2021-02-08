@@ -269,10 +269,10 @@ class Grid:
     @classmethod
     def grid_from_set_of_sites( cls, set_of_sites, limits, limits_for_laplacian, b, c ):
         """
-        Creates a grid from a given Set_of_Sites object.
+        Creates a grid from a given SetOfSites object.
 
         Args:
-            set_of_sites (object): Set_of_Sites object containing a set of all Site objects. 
+            set_of_sites (object): SetOfSites object containing a set of all Site objects. 
             limits (list): distance between the midpoint of the endmost sites and the midpoint of the next site outside of the calculation region for the first and last sites respectively. 
             limits_for_laplacian (list): distance between the endmost sites and the next site outside of the calculation region for the first and last sites respectively.
             b (float):                b dimension for every grid-point.

@@ -1,7 +1,7 @@
 import numpy as np 
 import mpmath
 from bisect import bisect_left, bisect_right
-from pyscses.set_of_sites import Set_of_Sites
+from pyscses.set_of_sites import SetOfSites
 from pyscses.matrix_solver import MatrixSolver
 from pyscses.set_up_calculation import calculate_grid_offsets
 from pyscses.constants import *
@@ -242,7 +242,7 @@ class Calculation:
         self.subgrids = subgrids
 
     def create_subregion_sites( self, grid, min_cut_off, max_cut_off ):
-        """Creates a `pyscses.Set_of_Sites` object for a defined region of the grid.
+        """Creates a `pyscses.SetOfSites` object for a defined region of the grid.
 
         Args:
             grid (object): Grid object - contains properties of the grid including the x coordinates and the volumes. Used to access the x coordinates.
@@ -257,7 +257,7 @@ class Calculation:
         for site in grid.set_of_sites:
             if site.x > min_cut_off and site.x < max_cut_off:
                 sites.append( site )
-        sites = Set_of_Sites( sites )
+        sites = SetOfSites( sites )
         return sites
 
     def create_space_charge_region( self, grid, pos_or_neg_scr, scr_limit ):
@@ -288,7 +288,7 @@ class Calculation:
     def calculate_mobile_defect_conductivities( self, pos_or_neg_scr, scr_limit, species, mobility_scaling=False ):
         """Calculate the conductivity ratio between the space charge region and the bulk both perpendicular and parallel to the grain boundary.
 
-        A `Set_of_Sites` object is created for the sites in the space charge region, and the defect distributions calculated. The width of the space charge region is calculated and a bulk region of the same width is defined. A Set_of_Sites object for the bulk region is created and the defect distributions calculated. Taking each site as a resistor in series or parallel respectively, the conductivity is calculated and the ratio between the space charge region and the bulk is taken. 
+        A `SetOfSites` object is created for the sites in the space charge region, and the defect distributions calculated. The width of the space charge region is calculated and a bulk region of the same width is defined. A SetOfSites object for the bulk region is created and the defect distributions calculated. Taking each site as a resistor in series or parallel respectively, the conductivity is calculated and the ratio between the space charge region and the bulk is taken. 
 
         Args:
             pos_or_neg_scr (str): 'positive' - for a positive space charge potential.
@@ -310,7 +310,7 @@ class Calculation:
             mobilities = site.defects[0].mobility
         space_charge_region_grid = Grid.grid_from_set_of_sites( space_charge_region_sites, space_charge_region_limits, space_charge_region_limits, self.grid.b, self.grid.c )
         space_charge_region_width = space_charge_region_grid.x[-1] - space_charge_region_grid.x[0]
-        mobile_defect_density = Set_of_Sites( self.subgrids[species].set_of_sites ).subgrid_calculate_defect_density( self.subgrids[species], self.grid, self.phi, self.temp )
+        mobile_defect_density = SetOfSites( self.subgrids[species].set_of_sites ).subgrid_calculate_defect_density( self.subgrids[species], self.grid, self.phi, self.temp )
         space_charge_region_mobile_defect_mf = space_charge_region_sites.calculate_probabilities( space_charge_region_grid, self.phi, self.temp )
         space_charge_region_mobile_defect_density = space_charge_region_sites.subgrid_calculate_defect_density( space_charge_region_grid, self.grid, self.phi, self.temp )
         if mobility_scaling:
@@ -322,7 +322,7 @@ class Calculation:
         self.bulk_limits = self.calculate_offset( self.subgrids[species], self.bulk_x_min, bulk_x_max ) 
         bulk_mobile_defect_sites = self.create_subregion_sites( self.subgrids[species], self.bulk_x_min, bulk_x_max )
         bulk_mobile_defect_grid = Grid.grid_from_set_of_sites( bulk_mobile_defect_sites, self.bulk_limits, self.bulk_limits, self.grid.b, self.grid.c )
-        bulk_mobile_defect_density = Set_of_Sites( bulk_mobile_defect_grid.set_of_sites ).subgrid_calculate_defect_density( bulk_mobile_defect_grid, self.grid, self.phi, self.temp )  
+        bulk_mobile_defect_density = SetOfSites( bulk_mobile_defect_grid.set_of_sites ).subgrid_calculate_defect_density( bulk_mobile_defect_grid, self.grid, self.phi, self.temp )  
         bulk_region_mobile_defect_mf = bulk_mobile_defect_sites.calculate_probabilities( bulk_mobile_defect_grid, self.phi, self.temp )
         if mobility_scaling:
             bulk_mobile_defect_conductivity = bulk_mobile_defect_density * charge * mobilities
@@ -429,7 +429,7 @@ class Calculation:
         mole_fractions = {}
         for label in self.site_labels:
             name = '{}'.format(label)
-            mole_fractions[name] = Set_of_Sites(self.subgrids[name].set_of_sites).calculate_probabilities( self.grid, self.phi, self.temp )
+            mole_fractions[name] = SetOfSites(self.subgrids[name].set_of_sites).calculate_probabilities( self.grid, self.phi, self.temp )
         self.mf = mole_fractions
 
 def diff_central(x, y):
