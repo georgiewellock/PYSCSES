@@ -2,7 +2,7 @@ import numpy as np
 import math
 from pyscses.constants import boltzmann_eV
 from bisect import bisect_left
-from scipy.interpolate import griddata
+from scipy.interpolate import griddata # type: ignore
 
 def phi_at_x( phi, coordinates, x ):
     """

@@ -1,23 +1,44 @@
 import numpy as np
 from pyscses.grid import Grid
-from scipy.interpolate import griddata
+from scipy.interpolate import griddata # type: ignore
 import math
 from pyscses.set_up_calculation import site_from_input_file, load_site_data 
 from pyscses.grid import index_of_grid_at_x, phi_at_x, energy_at_x
 from pyscses.site import Site
 from pyscses.constants import boltzmann_eV
 from bisect import bisect_left
+from typing import Sequence
 
 class SetOfSites:
-    """The SetOfSites object groups together all of the Site objects into one object and contains functions for the calculations that provide properties of all of the sites together rather than individually. """
-    def __init__( self, sites ):
-        self.sites = sites
+    """The SetOfSites class is a collection to group multiple Site objects."""
+
+    def __init__(self,
+                 sites: Sequence[Site]) -> None:
+        """Initialise a SetOfSites object.
+
+        Args:
+            sites (Sequence(Site)): A list or list-like sequence of Site objects.
+
+        Returns:
+            None
+
+        """
+        self.sites = tuple(sites)
     
-    def __add__( self, other ):
-        """ Allows the concatenation of multiple SetOfSites objects"""
-        if type( other ) is not SetOfSites:
+    def __add__(self,
+                other: SetOfSites) -> SetOfSites:
+        """Returns a new SetOfSites that includes both original sets of sites.
+
+        Args:
+            other (SetOfSites): The other SetOfSites to add.
+
+        Returns:
+            (SetOfSites)
+
+        """
+        if type(other) is not SetOfSites:
             raise TypeError
-        return SetOfSites( self.sites + other.sites )
+        return SetOfSites(self.sites + other.sites)
 
     def __getitem__( self, index ):
         """ Returns the site corresponding to a given index """

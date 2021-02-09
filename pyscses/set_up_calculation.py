@@ -4,7 +4,7 @@ from pyscses.site import Site
 import numpy as np
 from pyscses.constants import boltzmann_eV
 from bisect import bisect_left, bisect_right
-from sklearn.cluster import AgglomerativeClustering
+from sklearn.cluster import AgglomerativeClustering # type: ignore
 
 def site_from_input_file( site, defect_species, site_charge, core, temperature ):
     """
