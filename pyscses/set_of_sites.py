@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import numpy as np
 from pyscses.grid import Grid
 from scipy.interpolate import griddata # type: ignore
@@ -8,6 +10,7 @@ from pyscses.site import Site
 from pyscses.constants import boltzmann_eV
 from bisect import bisect_left
 from typing import Sequence
+
 
 class SetOfSites:
     """The SetOfSites class is a collection to group multiple Site objects."""
